@@ -20,7 +20,6 @@
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   html { scroll-behavior: smooth; }
 
   body {
@@ -127,15 +126,12 @@
     flex-shrink: 0;
   }
 
-  .nav a:hover, .nav a.active {
-    color: var(--white);
-  }
+  .nav a:hover, .nav a.active { color: var(--white); }
   .nav a:hover::before, .nav a.active::before {
     width: 56px;
     background: var(--accent);
   }
 
-  /* Download CV Button */
   .btn-cv {
     display: inline-flex;
     align-items: center;
@@ -166,21 +162,13 @@
     stroke-linecap: round; stroke-linejoin: round;
   }
 
-  .socials {
-    display: flex;
-    gap: 18px;
-    align-items: center;
-  }
-
+  .socials { display: flex; gap: 18px; align-items: center; }
   .socials a {
     color: var(--muted);
     transition: color 0.2s, transform 0.2s;
     display: flex;
   }
-  .socials a:hover {
-    color: var(--accent);
-    transform: translateY(-2px);
-  }
+  .socials a:hover { color: var(--accent); transform: translateY(-2px); }
   .socials svg { width: 20px; height: 20px; fill: currentColor; }
 
   /* ─── RIGHT PANEL ─── */
@@ -230,10 +218,7 @@
     margin-bottom: 18px;
   }
   .about-text p:last-child { margin-bottom: 0; }
-  .about-text strong {
-    color: var(--white);
-    font-weight: 600;
-  }
+  .about-text strong { color: var(--white); font-weight: 600; }
   .about-text a {
     color: var(--accent);
     text-decoration: none;
@@ -253,9 +238,7 @@
     transition: background 0.2s;
     cursor: default;
   }
-  .exp-item:hover {
-    background: rgba(100,255,218,0.04);
-  }
+  .exp-item:hover { background: rgba(100,255,218,0.04); }
 
   .exp-year {
     font-family: 'Space Mono', monospace;
@@ -272,11 +255,7 @@
     color: var(--white);
     margin-bottom: 4px;
   }
-  .exp-company a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.2s;
-  }
+  .exp-company a { color: inherit; text-decoration: none; transition: color 0.2s; }
   .exp-company a:hover { color: var(--accent); }
 
   .exp-role {
@@ -293,13 +272,7 @@
     margin-bottom: 14px;
   }
 
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 12px;
-  }
-
+  .tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
   .tag {
     font-family: 'Space Mono', monospace;
     font-size: 11px;
@@ -311,20 +284,18 @@
     letter-spacing: 0.5px;
   }
 
-  /* Projects */
+  /* ─── PROJECT CARD ─── */
   .project-card {
     display: grid;
     grid-template-columns: 100px 1fr;
     gap: 24px;
-    margin-bottom: 40px;
+    margin-bottom: 48px;
     padding: 20px;
     border-radius: 8px;
     transition: background 0.2s;
     cursor: default;
   }
-  .project-card:hover {
-    background: rgba(100,255,218,0.04);
-  }
+  .project-card:hover { background: rgba(100,255,218,0.04); }
 
   .project-num {
     font-family: 'Space Mono', monospace;
@@ -344,7 +315,6 @@
     align-items: center;
     gap: 10px;
   }
-
   .project-name svg {
     width: 14px; height: 14px;
     fill: none; stroke: var(--accent2); stroke-width: 2;
@@ -356,12 +326,108 @@
     font-size: 14px;
     color: var(--muted);
     line-height: 1.75;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  .project-desc strong { color: var(--white); font-weight: 600; }
+
+  /* ── Image Container ── */
+  .project-image-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid rgba(100,255,218,0.12);
+    background: var(--surface);
+    margin-bottom: 14px;
+    /* subtle inner glow on hover via the card */
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+  .project-card:hover .project-image-wrap {
+    border-color: rgba(100,255,218,0.3);
+    box-shadow: 0 0 20px rgba(100,255,218,0.06);
   }
 
-  .project-desc strong {
+  .project-image-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, opacity 0.3s;
+    opacity: 0.85;
+  }
+  .project-card:hover .project-image-wrap img {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+
+  /* Placeholder shown when no src or image fails to load */
+  .project-image-wrap .img-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: rgba(100,255,218,0.25);
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    pointer-events: none;
+    /* hidden once real image loads */
+  }
+  .project-image-wrap .img-placeholder svg {
+    width: 32px; height: 32px;
+    stroke: rgba(100,255,218,0.2); fill: none; stroke-width: 1.5;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  /* hide placeholder if img loaded */
+  .project-image-wrap img.loaded ~ .img-placeholder,
+  .project-image-wrap img:not([src=""]) ~ .img-placeholder {
+    display: none;
+  }
+
+  /* ── Visit / Demo Button ── */
+  .project-footer {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 4px;
+  }
+
+  .btn-visit {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 16px;
+    background: transparent;
+    border: 1px solid rgba(100,255,218,0.3);
+    border-radius: 4px;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-visit:hover {
+    background: rgba(100,255,218,0.1);
+    border-color: var(--accent);
     color: var(--white);
-    font-weight: 600;
+    transform: translateY(-1px);
+  }
+  .btn-visit:active { transform: translateY(0); }
+  .btn-visit svg {
+    width: 12px; height: 12px;
+    fill: none; stroke: currentColor; stroke-width: 2;
+    stroke-linecap: round; stroke-linejoin: round;
+    flex-shrink: 0;
   }
 
   /* Awards */
@@ -375,33 +441,18 @@
     transition: background 0.2s;
   }
   .award-item:hover { background: rgba(100,255,218,0.04); }
-
-  .award-icon {
-    color: var(--accent);
-    font-size: 16px;
-    margin-top: 2px;
-    flex-shrink: 0;
-  }
-
-  .award-title {
-    font-size: 14px;
-    color: var(--white);
-    font-weight: 500;
-  }
+  .award-icon { color: var(--accent); font-size: 16px; margin-top: 2px; flex-shrink: 0; }
+  .award-title { font-size: 14px; color: var(--white); font-weight: 500; }
   .award-sub {
-    font-size: 12px;
-    color: var(--muted);
-    margin-top: 2px;
+    font-size: 12px; color: var(--muted); margin-top: 2px;
     font-family: 'Space Mono', monospace;
   }
 
   /* Footer */
   .footer-note {
-    font-size: 12px;
-    color: var(--muted);
+    font-size: 12px; color: var(--muted);
     font-family: 'Space Mono', monospace;
-    margin-top: 60px;
-    line-height: 1.8;
+    margin-top: 60px; line-height: 1.8;
   }
   .footer-note a { color: var(--accent); text-decoration: none; }
   .footer-note a:hover { text-decoration: underline; }
@@ -411,7 +462,6 @@
   ::-webkit-scrollbar-track { background: var(--bg); }
   ::-webkit-scrollbar-thumb { background: var(--surface); border-radius: 3px; }
 
-  /* Cursor glow effect */
   .glow {
     pointer-events: none;
     position: fixed;
@@ -442,7 +492,7 @@
     <div>
       <h1 class="name">Mark<br>Art<span>jezreel</span><br>Agapito</h1>
       <p class="title">Full Stack Developer</p>
-      <p class="tagline">Building polished web & mobile experiences, from UI to API.</p>
+      <p class="tagline">Building polished web &amp; mobile experiences, from UI to API.</p>
 
       <nav class="nav">
         <a href="#about" class="active">About</a>
@@ -459,23 +509,14 @@
 
     <div>
       <div class="socials">
-        <!-- GitHub -->
         <a href="https://github.com/jezreelagapito2728" target="_blank" title="GitHub">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
         </a>
-        <!-- LinkedIn -->
         <a href="https://www.linkedin.com/in/mark-artjezreel-agapito-a82667369" target="_blank" title="LinkedIn">
-          <svg viewBox="0 0 24 24">
-            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
         </a>
-        <!-- Email -->
         <a href="mailto:jezreelagapito2728@gmail.com" title="Email">
-          <svg viewBox="0 0 24 24">
-            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
-          </svg>
+          <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
         </a>
       </div>
     </div>
@@ -506,11 +547,8 @@
           <div class="exp-role">Flutter Mobile Developer (OJT)</div>
           <div class="exp-desc">Built three production Flutter apps: a multilingual KOHA-integrated library system, an AI-powered companion chatbot with voice interaction and mood detection, and a two-sided service marketplace with escrow payments and AI-matched job opportunities.</div>
           <div class="tags">
-            <span class="tag">Flutter</span>
-            <span class="tag">Dart</span>
-            <span class="tag">API Integration</span>
-            <span class="tag">i18n</span>
-            <span class="tag">TTS / STT</span>
+            <span class="tag">Flutter</span><span class="tag">Dart</span>
+            <span class="tag">API Integration</span><span class="tag">i18n</span><span class="tag">TTS / STT</span>
           </div>
         </div>
       </div>
@@ -522,11 +560,8 @@
           <div class="exp-role">Full Stack Web Developer</div>
           <div class="exp-desc">Designed and developed a complete travel e-commerce platform with destination and package browsing, and a comprehensive admin panel for managing content, user accounts, and bookings.</div>
           <div class="tags">
-            <span class="tag">PHP</span>
-            <span class="tag">MySQL</span>
-            <span class="tag">JavaScript</span>
-            <span class="tag">HTML/CSS</span>
-            <span class="tag">Admin Panel</span>
+            <span class="tag">PHP</span><span class="tag">MySQL</span>
+            <span class="tag">JavaScript</span><span class="tag">HTML/CSS</span><span class="tag">Admin Panel</span>
           </div>
         </div>
       </div>
@@ -538,9 +573,7 @@
           <div class="exp-role">Hardware Specialist</div>
           <div class="exp-desc">Inspected and diagnosed hardware issues, built custom PC systems, and replaced or repaired damaged components to strengthen technical troubleshooting fundamentals.</div>
           <div class="tags">
-            <span class="tag">Hardware</span>
-            <span class="tag">Diagnostics</span>
-            <span class="tag">PC Building</span>
+            <span class="tag">Hardware</span><span class="tag">Diagnostics</span><span class="tag">PC Building</span>
           </div>
         </div>
       </div>
@@ -550,6 +583,7 @@
     <section id="projects">
       <div class="section-label">Projects</div>
 
+      <!-- ─── Project 01 ─── -->
       <div class="project-card">
         <div class="project-num">01</div>
         <div>
@@ -557,11 +591,38 @@
             Student Library App
             <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           </div>
+
+          <!-- IMAGE CONTAINER — replace src="" with your screenshot path, e.g. src="images/library-app.png" -->
+          <div class="project-image-wrap">
+            <img src="" alt="Student Library App screenshot" id="img-01"
+                 onerror="this.style.display='none'"
+                 onload="this.classList.add('loaded')">
+            <div class="img-placeholder">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Add screenshot
+            </div>
+          </div>
+
           <div class="project-desc">Developed a <strong>Flutter mobile app integrated with the KOHA Library System</strong>, featuring user authentication, speech-to-text search, and runtime language switching (English, Tagalog, Korean, and Japanese via i18n/gen-l10n). Includes API-based book search with history tracking and a profile section for managing password changes, borrowed items, holds, and due dates.</div>
-          <div class="tags"><span class="tag">Flutter</span><span class="tag">KOHA API</span><span class="tag">Speech-to-Text</span><span class="tag">i18n</span></div>
+          <div class="tags">
+            <span class="tag">Flutter</span><span class="tag">KOHA API</span>
+            <span class="tag">Speech-to-Text</span><span class="tag">i18n</span>
+          </div>
+          <div class="project-footer">
+            <!-- BUTTON — replace href="#" with the live URL -->
+            <a class="btn-visit" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Visit Project
+            </a>
+            <a class="btn-visit" href="https://github.com/jezreelagapito2728" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              Source Code
+            </a>
+          </div>
         </div>
       </div>
 
+      <!-- ─── Project 02 ─── -->
       <div class="project-card">
         <div class="project-num">02</div>
         <div>
@@ -569,11 +630,36 @@
             AI Companion Chatbot
             <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           </div>
+
+          <div class="project-image-wrap">
+            <img src="" alt="AI Companion Chatbot screenshot" id="img-02"
+                 onerror="this.style.display='none'"
+                 onload="this.classList.add('loaded')">
+            <div class="img-placeholder">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Add screenshot
+            </div>
+          </div>
+
           <div class="project-desc">Built a <strong>companion chatbot app in Flutter powered by the Grok API</strong>, featuring customizable fairy characters, voice interaction (TTS + STT), and mood detection with hotline recommendations for stress and depression. Additional features include daily tarot card readings and practical tools such as alarms, events, weather, and news.</div>
-          <div class="tags"><span class="tag">Flutter</span><span class="tag">Grok API</span><span class="tag">TTS / STT</span><span class="tag">Mood Detection</span></div>
+          <div class="tags">
+            <span class="tag">Flutter</span><span class="tag">Grok API</span>
+            <span class="tag">TTS / STT</span><span class="tag">Mood Detection</span>
+          </div>
+          <div class="project-footer">
+            <a class="btn-visit" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Visit Project
+            </a>
+            <a class="btn-visit" href="https://github.com/jezreelagapito2728" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              Source Code
+            </a>
+          </div>
         </div>
       </div>
 
+      <!-- ─── Project 03 ─── -->
       <div class="project-card">
         <div class="project-num">03</div>
         <div>
@@ -581,11 +667,36 @@
             Service Marketplace App
             <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           </div>
+
+          <div class="project-image-wrap">
+            <img src="" alt="Service Marketplace App screenshot" id="img-03"
+                 onerror="this.style.display='none'"
+                 onload="this.classList.add('loaded')">
+            <div class="img-placeholder">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Add screenshot
+            </div>
+          </div>
+
           <div class="project-desc">Created a <strong>two-sided service marketplace app in Flutter</strong> connecting customers with temporary service providers (repairs, household help, and more). Customers can post requests, browse rated profiles, hire providers, and pay securely via escrow. Providers can build skill profiles, bid on jobs, receive AI-matched opportunities, chat with clients, submit proof of work, and receive payment upon approval.</div>
-          <div class="tags"><span class="tag">Flutter</span><span class="tag">Escrow</span><span class="tag">AI Matching</span><span class="tag">Real-time Chat</span></div>
+          <div class="tags">
+            <span class="tag">Flutter</span><span class="tag">Escrow</span>
+            <span class="tag">AI Matching</span><span class="tag">Real-time Chat</span>
+          </div>
+          <div class="project-footer">
+            <a class="btn-visit" href="#" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Visit Project
+            </a>
+            <a class="btn-visit" href="https://github.com/jezreelagapito2728" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              Source Code
+            </a>
+          </div>
         </div>
       </div>
 
+      <!-- ─── Project 04 ─── -->
       <div class="project-card">
         <div class="project-num">04</div>
         <div>
@@ -593,16 +704,40 @@
             Traevents.Co Website
             <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
           </div>
-          <div class="project-desc">Full e-commerce travel platform with destination/package browsing, testimonials, and a rich admin panel managing carousels, visa forms, user accounts, local & international packages, and the WanderCard loyalty feature.</div>
-          <div class="tags"><span class="tag">PHP</span><span class="tag">MySQL</span><span class="tag">JavaScript</span><span class="tag">E-commerce</span></div>
+
+          <div class="project-image-wrap">
+            <img src="" alt="Traevents.Co website screenshot" id="img-04"
+                 onerror="this.style.display='none'"
+                 onload="this.classList.add('loaded')">
+            <div class="img-placeholder">
+              <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              Add screenshot
+            </div>
+          </div>
+
+          <div class="project-desc">Full e-commerce travel platform with destination/package browsing, testimonials, and a rich admin panel managing carousels, visa forms, user accounts, local &amp; international packages, and the WanderCard loyalty feature.</div>
+          <div class="tags">
+            <span class="tag">PHP</span><span class="tag">MySQL</span>
+            <span class="tag">JavaScript</span><span class="tag">E-commerce</span>
+          </div>
+          <div class="project-footer">
+            <a class="btn-visit" href="https://traevents.co" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+              Visit Project
+            </a>
+            <a class="btn-visit" href="https://github.com/jezreelagapito2728" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              Source Code
+            </a>
+          </div>
         </div>
       </div>
+
     </section>
 
     <!-- AWARDS -->
     <section id="awards">
-      <div class="section-label">Awards & Certifications</div>
-
+      <div class="section-label">Awards &amp; Certifications</div>
       <div class="award-item">
         <div class="award-icon">✦</div>
         <div>
@@ -628,7 +763,7 @@
 
     <div class="footer-note">
       Designed &amp; built by <strong>Mark Artjezreel Agapito</strong>.<br>
-      View source on <a href="https://github.com/jezreelagapito2728">GitHub</a> · 
+      View source on <a href="https://github.com/jezreelagapito2728">GitHub</a> ·
       <a href="mailto:jezreelagapito2728@gmail.com">jezreelagapito2728@gmail.com</a>
     </div>
 
@@ -640,14 +775,13 @@
   const glow = document.getElementById('glow');
   document.addEventListener('mousemove', e => {
     glow.style.left = e.clientX + 'px';
-    glow.style.top = e.clientY + 'px';
+    glow.style.top  = e.clientY + 'px';
   });
 
   // Active nav on scroll
   const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('.nav a');
-
-  const observer = new IntersectionObserver(entries => {
+  const navLinks  = document.querySelectorAll('.nav a');
+  const observer  = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         navLinks.forEach(a => {
@@ -656,8 +790,14 @@
       }
     });
   }, { threshold: 0.4 });
-
   sections.forEach(s => observer.observe(s));
+
+  // Hide image containers that have no src set
+  document.querySelectorAll('.project-image-wrap img').forEach(img => {
+    if (!img.getAttribute('src')) {
+      img.style.display = 'none';
+    }
+  });
 </script>
 </body>
 </html>
